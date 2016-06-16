@@ -15,4 +15,9 @@ namespace authentication.API.Models
         public List<Article> articles { get; set; }
         public int totalRecords { get; set; }
     }
+    public class ArticleResponse
+    {
+        public Article article { get; set; }
+        public string author { get; set; }
+    }
 }

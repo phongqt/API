@@ -33,32 +33,38 @@ namespace authentication.API.Controllers
         [Route("Register")]
         public ResponseModel Register(User userModel)
         {
-            if (!string.IsNullOrEmpty(userModel.UserName))
+            try
             {
-                return new ResponseModel { code = HttpStatusCode.BadRequest, message = "User name is required" };
-            }
-            if (!string.IsNullOrEmpty(userModel.FirstName))
+                if (!string.IsNullOrEmpty(userModel.UserName))
+                {
+                    return new ResponseModel { code = HttpStatusCode.BadRequest, message = "User name is required" };
+                }
+                if (!string.IsNullOrEmpty(userModel.FirstName))
+                {
+                    return new ResponseModel { code = HttpStatusCode.BadRequest, message = "First name is required" };
+                }
+                if (!string.IsNullOrEmpty(userModel.LastName))
+                {
+                    return new ResponseModel { code = HttpStatusCode.BadRequest, message = "Last name is required" };
+                }
+                if (!string.IsNullOrEmpty(userModel.Password))
+                {
+                    return new ResponseModel { code = HttpStatusCode.BadRequest, message = "Password is required" };
+                }
+                if (_repo.checkExist(userModel.UserName))
+                {
+                    return new ResponseModel { code = HttpStatusCode.Conflict, message = "This email already exists" };
+                }
+                userModel.Role = 1;
+                if (_repo.insert(userModel) != -1)
+                {
+                    return new ResponseModel { code = HttpStatusCode.Created, message = "OK" };
+                }
+                return new ResponseModel { code = HttpStatusCode.ExpectationFailed, message = "Error" };
+            } catch(Exception ex)
             {
-                return new ResponseModel{code = HttpStatusCode.BadRequest, message = "First name is required" };
+                return new ResponseModel { code = HttpStatusCode.ExpectationFailed, message = "Error" };
             }
-            if (!string.IsNullOrEmpty(userModel.LastName))
-            {
-                return new ResponseModel { code = HttpStatusCode.BadRequest, message = "Last name is required" };
-            }
-            if (!string.IsNullOrEmpty(userModel.Password))
-            {
-                return new ResponseModel { code = HttpStatusCode.BadRequest, message = "Password is required" };
-            }
-            if (_repo.checkExist(userModel.UserName))
-            {
-                return new ResponseModel { code = HttpStatusCode.Conflict, message = "This email already exists" };
-            }
-            userModel.Role = 1;
-            if (_repo.insert(userModel) != -1)
-            {
-                return new ResponseModel { code = HttpStatusCode.Created, message = "OK" };
-            }
-            return new ResponseModel { code = HttpStatusCode.ExpectationFailed, message = "Error" };
         }
 
         protected override void Dispose(bool disposing)

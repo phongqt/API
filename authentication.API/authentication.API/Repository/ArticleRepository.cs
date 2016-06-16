@@ -82,6 +82,15 @@ namespace authentication.API.Repository
             }
 
         }
+        public Article getArticleByAlias(string alias)
+        {
+            
+            using (blg = new BlogContext())
+            {
+                return blg.Articles.FirstOrDefault(x => x.Alias == alias);
+            }
+
+        }
 
         public void Dispose()
         {
