@@ -47,7 +47,8 @@ namespace authentication.API.Controllers
                     return new ResponseModel { code = HttpStatusCode.BadRequest, message = "Content is required" };
                 }
                 articleModel.UserId = 1;
-                articleModel.Alias = RemoveUnicode(articleModel.Title.ToLower()) + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+                articleModel.Created = DateTime.UtcNow;
+                articleModel.Alias = RemoveUnicode(articleModel.Title).ToLower() + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
                 if (_repo.insert(articleModel) != -1)
                 {
                     return new ResponseModel { code = HttpStatusCode.Created, message = "OK" };

@@ -176,6 +176,7 @@
     <Compile Include="Context\BlogContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ClaimsController.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\User.cs" />
